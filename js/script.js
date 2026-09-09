@@ -26,9 +26,12 @@ const currentYear =
 const codeWindow =
     document.getElementById("codeWindow");
 
+const themeToggle =
+    document.getElementById("themeToggle");
+
 
 // ========================================
-// ANO
+// ANO AUTOMÁTICO
 // ========================================
 
 if (currentYear) {
@@ -40,10 +43,148 @@ if (currentYear) {
 
 
 // ========================================
-// HEADER
+// TEMA
+// ========================================
+
+function getCurrentTheme() {
+
+    return (
+        document.documentElement
+            .dataset
+            .theme ||
+        "light"
+    );
+
+}
+
+
+function updateThemeButton() {
+
+    if (!themeToggle) {
+        return;
+    }
+
+
+    const isDark =
+        getCurrentTheme() ===
+        "dark";
+
+
+    themeToggle.setAttribute(
+        "aria-label",
+        isDark
+            ? "Ativar modo claro"
+            : "Ativar modo escuro"
+    );
+
+
+    themeToggle.setAttribute(
+        "title",
+        isDark
+            ? "Modo claro"
+            : "Modo escuro"
+    );
+
+}
+
+
+function setTheme(theme) {
+
+    document.documentElement
+        .dataset
+        .theme =
+        theme;
+
+
+    localStorage.setItem(
+        "portfolio-theme",
+        theme
+    );
+
+
+    updateThemeButton();
+
+}
+
+
+if (themeToggle) {
+
+    themeToggle.addEventListener(
+        "click",
+        () => {
+
+            const currentTheme =
+                getCurrentTheme();
+
+
+            const newTheme =
+                currentTheme === "dark"
+                    ? "light"
+                    : "dark";
+
+
+            setTheme(newTheme);
+
+        }
+    );
+
+}
+
+
+updateThemeButton();
+
+
+// ========================================
+// ALTERAÇÃO DO TEMA DO SISTEMA
+// ========================================
+
+const systemTheme =
+    window.matchMedia(
+        "(prefers-color-scheme: dark)"
+    );
+
+
+systemTheme.addEventListener(
+    "change",
+    event => {
+
+        /*
+            Só acompanhamos o sistema
+            se o usuário ainda não tiver
+            escolhido manualmente um tema.
+        */
+
+        const savedTheme =
+            localStorage.getItem(
+                "portfolio-theme"
+            );
+
+
+        if (savedTheme) {
+            return;
+        }
+
+
+        setTheme(
+            event.matches
+                ? "dark"
+                : "light"
+        );
+
+    }
+);
+
+
+// ========================================
+// HEADER AO ROLAR
 // ========================================
 
 function updateHeader() {
+
+    if (!header) {
+        return;
+    }
+
 
     if (window.scrollY > 30) {
 
@@ -70,56 +211,35 @@ window.addEventListener(
     }
 );
 
+
 updateHeader();
 
 
 // ========================================
-// MOBILE MENU
-// ========================================
-
-menuButton.addEventListener(
-    "click",
-    () => {
-
-        const isOpen =
-            nav.classList.toggle(
-                "active"
-            );
-
-        menuButton.classList.toggle(
-            "active"
-        );
-
-        document.body.classList.toggle(
-            "menu-open"
-        );
-
-        menuButton.setAttribute(
-            "aria-expanded",
-            isOpen
-        );
-
-    }
-);
-
-
-// ========================================
-// CLOSE MENU
+// FUNÇÃO FECHAR MENU
 // ========================================
 
 function closeMenu() {
+
+    if (!nav || !menuButton) {
+        return;
+    }
+
 
     nav.classList.remove(
         "active"
     );
 
+
     menuButton.classList.remove(
         "active"
     );
 
+
     document.body.classList.remove(
         "menu-open"
     );
+
 
     menuButton.setAttribute(
         "aria-expanded",
@@ -129,12 +249,62 @@ function closeMenu() {
 }
 
 
+// ========================================
+// MENU MOBILE
+// ========================================
+
+if (
+    menuButton &&
+    nav
+) {
+
+    menuButton.addEventListener(
+        "click",
+        () => {
+
+            const isOpen =
+                nav.classList.toggle(
+                    "active"
+                );
+
+
+            menuButton.classList.toggle(
+                "active",
+                isOpen
+            );
+
+
+            document.body.classList.toggle(
+                "menu-open",
+                isOpen
+            );
+
+
+            menuButton.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+
+        }
+    );
+
+}
+
+
+// ========================================
+// FECHAR MENU AO CLICAR EM LINK
+// ========================================
+
 navLinks.forEach(
     link => {
 
         link.addEventListener(
             "click",
-            closeMenu
+            () => {
+
+                closeMenu();
+
+            }
         );
 
     }
@@ -142,13 +312,14 @@ navLinks.forEach(
 
 
 // ========================================
-// ACTIVE SECTION
+// LINK ATIVO CONFORME O SCROLL
 // ========================================
 
 function updateActiveSection() {
 
     const scrollPosition =
         window.scrollY + 170;
+
 
     sections.forEach(
         section => {
@@ -164,10 +335,13 @@ function updateActiveSection() {
                     "id"
                 );
 
+
             if (
-                scrollPosition >= sectionTop &&
+                scrollPosition >=
+                sectionTop &&
                 scrollPosition <
-                sectionTop + sectionHeight
+                sectionTop +
+                sectionHeight
             ) {
 
                 navLinks.forEach(
@@ -176,6 +350,7 @@ function updateActiveSection() {
                         link.classList.remove(
                             "active"
                         );
+
 
                         if (
                             link.getAttribute(
@@ -209,6 +384,7 @@ window.addEventListener(
     }
 );
 
+
 updateActiveSection();
 
 
@@ -228,13 +404,17 @@ const revealObserver =
                         entry.isIntersecting
                     ) {
 
-                        entry.target.classList.add(
-                            "visible"
-                        );
+                        entry.target
+                            .classList
+                            .add(
+                                "visible"
+                            );
 
-                        revealObserver.unobserve(
-                            entry.target
-                        );
+
+                        revealObserver
+                            .unobserve(
+                                entry.target
+                            );
 
                     }
 
@@ -262,25 +442,43 @@ revealElements.forEach(
 
 
 // ========================================
-// CLICK FORA DO MENU
+// FECHAR MENU AO CLICAR FORA
 // ========================================
 
 document.addEventListener(
     "click",
     event => {
 
+        if (
+            !nav ||
+            !menuButton
+        ) {
+            return;
+        }
+
+
+        if (
+            !nav.classList.contains(
+                "active"
+            )
+        ) {
+            return;
+        }
+
+
         const clickedInsideNav =
             nav.contains(
                 event.target
             );
+
 
         const clickedMenuButton =
             menuButton.contains(
                 event.target
             );
 
+
         if (
-            nav.classList.contains("active") &&
             !clickedInsideNav &&
             !clickedMenuButton
         ) {
@@ -294,7 +492,7 @@ document.addEventListener(
 
 
 // ========================================
-// ESC
+// ESC FECHA MENU
 // ========================================
 
 document.addEventListener(
@@ -302,10 +500,8 @@ document.addEventListener(
     event => {
 
         if (
-            event.key === "Escape" &&
-            nav.classList.contains(
-                "active"
-            )
+            event.key ===
+            "Escape"
         ) {
 
             closeMenu();
@@ -317,39 +513,79 @@ document.addEventListener(
 
 
 // ========================================
-// PARALLAX CODE WINDOW
+// PARALLAX DA JANELA
 // ========================================
 
-function handleCodeParallax(event) {
+function handleCodeParallax(
+    event
+) {
 
     if (!codeWindow) {
         return;
     }
 
-    if (window.innerWidth < 1000) {
 
-        codeWindow.style.transform =
+    /*
+        Sem parallax em telas menores.
+    */
+
+    if (
+        window.innerWidth <
+        1000
+    ) {
+
+        codeWindow.style
+            .transform =
             "translate3d(0, 0, 0)";
 
         return;
     }
 
+
+    /*
+        Também respeita pessoas
+        que preferem menos movimento.
+    */
+
+    const prefersReducedMotion =
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+
+    if (prefersReducedMotion) {
+        return;
+    }
+
+
     const mouseX =
         event.clientX /
         window.innerWidth;
+
 
     const mouseY =
         event.clientY /
         window.innerHeight;
 
+
     const moveX =
-        (mouseX - 0.5) * 10;
+        (mouseX - 0.5) *
+        10;
+
 
     const moveY =
-        (mouseY - 0.5) * 10;
+        (mouseY - 0.5) *
+        10;
+
 
     codeWindow.style.transform =
-        `translate3d(${moveX}px, ${moveY}px, 0)`;
+        `
+        translate3d(
+            ${moveX}px,
+            ${moveY}px,
+            0
+        )
+        `;
 
 }
 
@@ -361,22 +597,25 @@ window.addEventListener(
 
 
 // ========================================
-// RESET PARALLAX
+// RESET DO PARALLAX
 // ========================================
 
-document.documentElement.addEventListener(
-    "mouseleave",
-    () => {
+document.documentElement
+    .addEventListener(
+        "mouseleave",
+        () => {
 
-        if (codeWindow) {
+            if (!codeWindow) {
+                return;
+            }
 
-            codeWindow.style.transform =
+
+            codeWindow.style
+                .transform =
                 "translate3d(0, 0, 0)";
 
         }
-
-    }
-);
+    );
 
 
 // ========================================
@@ -387,21 +626,33 @@ window.addEventListener(
     "resize",
     () => {
 
+        /*
+            Desativa o movimento do
+            card em tablet/mobile.
+        */
+
         if (
-            window.innerWidth < 1000 &&
+            window.innerWidth <
+            1000 &&
             codeWindow
         ) {
 
-            codeWindow.style.transform =
+            codeWindow.style
+                .transform =
                 "translate3d(0, 0, 0)";
 
         }
 
+
+        /*
+            Se voltar para desktop
+            com o menu aberto,
+            fecha automaticamente.
+        */
+
         if (
-            window.innerWidth > 760 &&
-            nav.classList.contains(
-                "active"
-            )
+            window.innerWidth >
+            760
         ) {
 
             closeMenu();

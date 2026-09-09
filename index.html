@@ -16,63 +16,258 @@
 
     <title>Douglas Antonio | Desenvolvedor de Software</title>
 
+    <!--
+        Define o tema antes do CSS carregar.
+        Isso evita aquele flash claro ao abrir o site no dark mode.
+    -->
+    <script>
+        (() => {
+            const savedTheme =
+                localStorage.getItem("portfolio-theme");
+
+            const prefersDark =
+                window.matchMedia(
+                    "(prefers-color-scheme: dark)"
+                ).matches;
+
+            const theme =
+                savedTheme ||
+                (prefersDark ? "dark" : "light");
+
+            document.documentElement.dataset.theme =
+                theme;
+        })();
+    </script>
+
+
+    <!-- Google Fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
     >
 
-    <link rel="stylesheet" href="css/style.css">
+
+    <!-- CSS -->
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
 </head>
+
 
 <body>
 
-    <!-- HEADER -->
+    <!-- =========================================
+         HEADER
+    ========================================== -->
 
-    <header class="header" id="header">
+    <header
+        class="header"
+        id="header"
+    >
 
         <div class="container header-container">
 
-            <a href="#inicio" class="logo">
+
+            <!-- LOGO -->
+
+            <a
+                href="#inicio"
+                class="logo"
+            >
                 Douglas<span>.</span>
             </a>
 
-            <nav class="nav" id="nav">
 
-                <a href="#inicio" class="nav-link active">
+            <!-- NAVEGAÇÃO -->
+
+            <nav
+                class="nav"
+                id="nav"
+            >
+
+                <a
+                    href="#inicio"
+                    class="nav-link active"
+                >
                     Início
                 </a>
 
-                <a href="#sobre" class="nav-link">
+                <a
+                    href="#sobre"
+                    class="nav-link"
+                >
                     Sobre
                 </a>
 
-                <a href="#projetos" class="nav-link">
+                <a
+                    href="#projetos"
+                    class="nav-link"
+                >
                     Projetos
                 </a>
 
-                <a href="#tecnologias" class="nav-link">
+                <a
+                    href="#tecnologias"
+                    class="nav-link"
+                >
                     Tecnologias
                 </a>
 
-                <a href="#contato" class="nav-link">
+                <a
+                    href="#contato"
+                    class="nav-link"
+                >
                     Contato
                 </a>
 
             </nav>
 
-            <button
-                class="menu-button"
-                id="menuButton"
-                aria-label="Abrir menu"
-                aria-expanded="false"
-            >
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+
+            <!-- AÇÕES -->
+
+            <div class="header-actions">
+
+
+                <!-- DARK MODE -->
+
+                <button
+                    class="theme-toggle"
+                    id="themeToggle"
+                    type="button"
+                    aria-label="Ativar modo escuro"
+                    title="Modo escuro"
+                >
+
+                    <!-- LUA -->
+
+                    <svg
+                        class="theme-icon moon-icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path
+                            d="
+                                M21 12.79
+                                A9 9 0 1 1 11.21 3
+                                A7 7 0 0 0 21 12.79
+                            "
+                        />
+                    </svg>
+
+
+                    <!-- SOL -->
+
+                    <svg
+                        class="theme-icon sun-icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="4"
+                        />
+
+                        <line
+                            x1="12"
+                            y1="2"
+                            x2="12"
+                            y2="4"
+                        />
+
+                        <line
+                            x1="12"
+                            y1="20"
+                            x2="12"
+                            y2="22"
+                        />
+
+                        <line
+                            x1="4.93"
+                            y1="4.93"
+                            x2="6.34"
+                            y2="6.34"
+                        />
+
+                        <line
+                            x1="17.66"
+                            y1="17.66"
+                            x2="19.07"
+                            y2="19.07"
+                        />
+
+                        <line
+                            x1="2"
+                            y1="12"
+                            x2="4"
+                            y2="12"
+                        />
+
+                        <line
+                            x1="20"
+                            y1="12"
+                            x2="22"
+                            y2="12"
+                        />
+
+                        <line
+                            x1="4.93"
+                            y1="19.07"
+                            x2="6.34"
+                            y2="17.66"
+                        />
+
+                        <line
+                            x1="17.66"
+                            y1="6.34"
+                            x2="19.07"
+                            y2="4.93"
+                        />
+
+                    </svg>
+
+                </button>
+
+
+                <!-- MENU MOBILE -->
+
+                <button
+                    class="menu-button"
+                    id="menuButton"
+                    type="button"
+                    aria-label="Abrir menu"
+                    aria-expanded="false"
+                >
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </button>
+
+            </div>
 
         </div>
 
@@ -81,23 +276,42 @@
 
     <main>
 
-        <!-- HERO -->
+        <!-- =========================================
+             HERO
+        ========================================== -->
 
-        <section class="hero section" id="inicio">
+        <section
+            class="hero section"
+            id="inicio"
+        >
 
-            <div class="hero-decoration hero-decoration-one"></div>
-            <div class="hero-decoration hero-decoration-two"></div>
+            <div
+                class="
+                    hero-decoration
+                    hero-decoration-one
+                "
+            ></div>
+
+            <div
+                class="
+                    hero-decoration
+                    hero-decoration-two
+                "
+            ></div>
+
 
             <div class="container hero-container">
 
 
-                <!-- TEXTO -->
+                <!-- CONTEÚDO -->
 
                 <div class="hero-content reveal">
+
 
                     <span class="eyebrow">
                         Olá, seja bem-vindo 👋
                     </span>
+
 
                     <h1>
                         Eu sou
@@ -106,38 +320,62 @@
                         de software.
                     </h1>
 
+
                     <p class="hero-description">
-                        Crio aplicações modernas, funcionais e bem estruturadas,
-                        transformando ideias em experiências digitais simples,
-                        intuitivas e agradáveis de usar.
+                        Crio aplicações modernas, funcionais e bem
+                        estruturadas, transformando ideias em experiências
+                        digitais simples, intuitivas e agradáveis de usar.
                     </p>
+
 
                     <div class="hero-specialties">
 
-                        <span>Flutter</span>
-                        <span>Web</span>
-                        <span>Game Development</span>
+                        <span>
+                            Flutter
+                        </span>
+
+                        <span>
+                            Web
+                        </span>
+
+                        <span>
+                            Game Development
+                        </span>
 
                     </div>
+
 
                     <div class="hero-actions">
 
                         <a
                             href="#projetos"
-                            class="button button-primary"
+                            class="
+                                button
+                                button-primary
+                            "
                         >
                             Ver meus projetos
-                            <span>↓</span>
+
+                            <span>
+                                ↓
+                            </span>
                         </a>
+
 
                         <a
                             href="https://github.com/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="button button-secondary"
+                            class="
+                                button
+                                button-secondary
+                            "
                         >
                             GitHub
-                            <span>↗</span>
+
+                            <span>
+                                ↗
+                            </span>
                         </a>
 
                     </div>
@@ -145,21 +383,47 @@
                 </div>
 
 
-                <!-- CODE WINDOW -->
+                <!-- JANELA DE CÓDIGO -->
 
                 <div class="hero-visual reveal">
 
-                    <div class="code-window" id="codeWindow">
+
+                    <div
+                        class="code-window"
+                        id="codeWindow"
+                    >
+
+
+                        <!-- HEADER DO EDITOR -->
 
                         <div class="code-window-header">
 
+
                             <div class="window-dots">
 
-                                <span class="dot dot-orange"></span>
-                                <span class="dot dot-teal"></span>
-                                <span class="dot dot-light"></span>
+                                <span
+                                    class="
+                                        dot
+                                        dot-orange
+                                    "
+                                ></span>
+
+                                <span
+                                    class="
+                                        dot
+                                        dot-teal
+                                    "
+                                ></span>
+
+                                <span
+                                    class="
+                                        dot
+                                        dot-light
+                                    "
+                                ></span>
 
                             </div>
+
 
                             <span class="window-title">
                                 portfolio.js
@@ -168,7 +432,10 @@
                         </div>
 
 
+                        <!-- CÓDIGO -->
+
                         <div class="code-content">
+
 
                             <div class="code-line">
 
@@ -180,8 +447,13 @@
                                     developer
                                 </span>
 
-                                <span class="code-symbol">=</span>
-                                <span class="code-symbol">{</span>
+                                <span class="code-symbol">
+                                    =
+                                </span>
+
+                                <span class="code-symbol">
+                                    {
+                                </span>
 
                             </div>
 
@@ -192,7 +464,9 @@
                                     name
                                 </span>
 
-                                <span class="code-symbol">:</span>
+                                <span class="code-symbol">
+                                    :
+                                </span>
 
                                 <span class="code-string">
                                     "Douglas"
@@ -207,7 +481,9 @@
                                     role
                                 </span>
 
-                                <span class="code-symbol">:</span>
+                                <span class="code-symbol">
+                                    :
+                                </span>
 
                                 <span class="code-string">
                                     "Software Developer"
@@ -222,9 +498,13 @@
                                     stack
                                 </span>
 
-                                <span class="code-symbol">:</span>
+                                <span class="code-symbol">
+                                    :
+                                </span>
 
-                                <span class="code-bracket">[</span>
+                                <span class="code-bracket">
+                                    [
+                                </span>
 
                                 <span class="code-string">
                                     "Flutter"
@@ -234,7 +514,9 @@
                                     "Web"
                                 </span>
 
-                                <span class="code-bracket">]</span>,
+                                <span class="code-bracket">
+                                    ]
+                                </span>,
 
                             </div>
 
@@ -245,7 +527,9 @@
                                     gameDev
                                 </span>
 
-                                <span class="code-symbol">:</span>
+                                <span class="code-symbol">
+                                    :
+                                </span>
 
                                 <span class="code-string">
                                     "Godot"
@@ -260,7 +544,9 @@
                                     passion
                                 </span>
 
-                                <span class="code-symbol">:</span>
+                                <span class="code-symbol">
+                                    :
+                                </span>
 
                                 <span class="code-string">
                                     "Creating"
@@ -270,21 +556,44 @@
 
 
                             <div class="code-line">
-                                <span class="code-symbol">}</span>;
+
+                                <span class="code-symbol">
+                                    }
+                                </span>;
+
                             </div>
 
                         </div>
 
 
-                        <div class="floating-tech tech-flutter">
+                        <!-- TECNOLOGIAS FLUTUANTES -->
+
+                        <div
+                            class="
+                                floating-tech
+                                tech-flutter
+                            "
+                        >
                             Flutter
                         </div>
 
-                        <div class="floating-tech tech-web">
+
+                        <div
+                            class="
+                                floating-tech
+                                tech-web
+                            "
+                        >
                             Web
                         </div>
 
-                        <div class="floating-tech tech-godot">
+
+                        <div
+                            class="
+                                floating-tech
+                                tech-godot
+                            "
+                        >
                             Godot
                         </div>
 
@@ -294,6 +603,8 @@
 
             </div>
 
+
+            <!-- SCROLL -->
 
             <a
                 href="#sobre"
@@ -311,11 +622,17 @@
         </section>
 
 
-        <!-- SOBRE -->
+        <!-- =========================================
+             SOBRE
+        ========================================== -->
 
-        <section class="section about" id="sobre">
+        <section
+            class="section about"
+            id="sobre"
+        >
 
             <div class="container">
+
 
                 <div class="section-heading reveal">
 
@@ -341,28 +658,35 @@
 
                 <div class="about-grid">
 
+
                     <div class="about-text reveal">
 
                         <p>
                             Sou desenvolvedor de software com interesse
                             na criação de aplicações que unem uma boa
-                            experiência de usuário com uma estrutura de
-                            código organizada e sustentável.
+                            experiência de usuário com uma estrutura
+                            de código organizada e sustentável.
                         </p>
+
 
                         <p>
                             Tenho trabalhado principalmente com
-                            <strong>Flutter e Dart</strong>,
+                            <strong>
+                                Flutter e Dart
+                            </strong>,
                             desenvolvendo aplicações que envolvem
                             persistência de dados, gerenciamento de estado,
                             integrações com APIs, regras de negócio
                             e interfaces responsivas.
                         </p>
 
+
                         <p>
-                            Também desenvolvo projetos utilizando tecnologias
-                            web e o motor de jogos
-                            <strong>Godot</strong>,
+                            Também desenvolvo projetos utilizando
+                            tecnologias web e o motor de jogos
+                            <strong>
+                                Godot
+                            </strong>,
                             explorando sistemas de gameplay,
                             interfaces e arquitetura de jogos.
                         </p>
@@ -372,7 +696,13 @@
 
                     <div class="about-cards reveal">
 
-                        <article class="mini-card mini-card-teal">
+
+                        <article
+                            class="
+                                mini-card
+                                mini-card-teal
+                            "
+                        >
 
                             <span class="mini-number">
                                 01
@@ -390,7 +720,12 @@
                         </article>
 
 
-                        <article class="mini-card mini-card-orange">
+                        <article
+                            class="
+                                mini-card
+                                mini-card-orange
+                            "
+                        >
 
                             <span class="mini-number">
                                 02
@@ -401,14 +736,19 @@
                             </h3>
 
                             <p>
-                                Experiências modernas com foco em
-                                clareza e usabilidade.
+                                Experiências modernas com foco
+                                em clareza e usabilidade.
                             </p>
 
                         </article>
 
 
-                        <article class="mini-card mini-card-light">
+                        <article
+                            class="
+                                mini-card
+                                mini-card-light
+                            "
+                        >
 
                             <span class="mini-number">
                                 03
@@ -419,8 +759,8 @@
                             </h3>
 
                             <p>
-                                Código organizado pensando em
-                                manutenção, evolução e escalabilidade.
+                                Código organizado pensando em manutenção,
+                                evolução e escalabilidade.
                             </p>
 
                         </article>
@@ -434,7 +774,9 @@
         </section>
 
 
-        <!-- PROJETOS -->
+        <!-- =========================================
+             PROJETOS
+        ========================================== -->
 
         <section
             class="section projects"
@@ -442,6 +784,7 @@
         >
 
             <div class="container">
+
 
                 <div class="section-heading reveal">
 
@@ -465,9 +808,12 @@
                 </div>
 
 
-                <!-- FINANSEE -->
+                <!-- =========================================
+                     FINANSEE
+                ========================================== -->
 
                 <article class="project reveal">
+
 
                     <div class="project-info">
 
@@ -483,6 +829,7 @@
                             Gerenciador financeiro pessoal
                         </p>
 
+
                         <p class="project-description">
                             Aplicativo desenvolvido em Flutter para auxiliar
                             no controle da vida financeira através do
@@ -495,9 +842,13 @@
                         <div class="project-technologies">
 
                             <span>Flutter</span>
+
                             <span>Dart</span>
+
                             <span>Riverpod</span>
+
                             <span>Drift</span>
+
                             <span>SQLite</span>
 
                         </div>
@@ -510,8 +861,12 @@
                                 class="text-link"
                             >
                                 Ver detalhes
-                                <span>↗</span>
+
+                                <span>
+                                    ↗
+                                </span>
                             </a>
+
 
                             <a
                                 href="https://github.com/"
@@ -520,7 +875,10 @@
                                 class="text-link"
                             >
                                 GitHub
-                                <span>↗</span>
+
+                                <span>
+                                    ↗
+                                </span>
                             </a>
 
                         </div>
@@ -528,9 +886,15 @@
                     </div>
 
 
-                    <div class="project-media project-media-teal">
+                    <div
+                        class="
+                            project-media
+                            project-media-teal
+                        "
+                    >
 
                         <div class="app-window">
+
 
                             <div class="app-sidebar">
 
@@ -538,7 +902,12 @@
                                     F
                                 </div>
 
-                                <div class="sidebar-item active"></div>
+                                <div
+                                    class="
+                                        sidebar-item
+                                        active
+                                    "
+                                ></div>
 
                                 <div class="sidebar-item"></div>
 
@@ -551,9 +920,11 @@
 
                             <div class="app-content">
 
+
                                 <div class="app-title">
                                     FinanSee
                                 </div>
+
 
                                 <div class="app-balance-card">
 
@@ -573,6 +944,7 @@
 
 
                                 <div class="app-grid">
+
 
                                     <div class="app-stat">
 
@@ -605,11 +977,17 @@
                                 <div class="fake-chart">
 
                                     <span style="height:42%"></span>
+
                                     <span style="height:62%"></span>
+
                                     <span style="height:48%"></span>
+
                                     <span style="height:78%"></span>
+
                                     <span style="height:58%"></span>
+
                                     <span style="height:88%"></span>
+
                                     <span style="height:70%"></span>
 
                                 </div>
@@ -623,9 +1001,18 @@
                 </article>
 
 
-                <!-- CONSULTA CNPJ -->
+                <!-- =========================================
+                     CONSULTA CNPJ
+                ========================================== -->
 
-                <article class="project project-reverse reveal">
+                <article
+                    class="
+                        project
+                        project-reverse
+                        reveal
+                    "
+                >
+
 
                     <div class="project-info">
 
@@ -641,6 +1028,7 @@
                             Consulta de dados empresariais
                         </p>
 
+
                         <p class="project-description">
                             Aplicação desenvolvida para realizar consultas
                             de empresas através do CNPJ, apresentando
@@ -652,8 +1040,11 @@
                         <div class="project-technologies">
 
                             <span>Flutter</span>
+
                             <span>Dart</span>
+
                             <span>REST API</span>
+
                             <span>Windows</span>
 
                         </div>
@@ -666,8 +1057,12 @@
                                 class="text-link"
                             >
                                 Ver detalhes
-                                <span>↗</span>
+
+                                <span>
+                                    ↗
+                                </span>
                             </a>
+
 
                             <a
                                 href="https://github.com/"
@@ -676,7 +1071,10 @@
                                 class="text-link"
                             >
                                 GitHub
-                                <span>↗</span>
+
+                                <span>
+                                    ↗
+                                </span>
                             </a>
 
                         </div>
@@ -684,9 +1082,15 @@
                     </div>
 
 
-                    <div class="project-media project-media-orange">
+                    <div
+                        class="
+                            project-media
+                            project-media-orange
+                        "
+                    >
 
                         <div class="search-app">
+
 
                             <div class="search-app-header">
                                 Consulta CNPJ
@@ -699,7 +1103,7 @@
                                     00.000.000/0001-00
                                 </span>
 
-                                <button>
+                                <button type="button">
                                     Consultar
                                 </button>
 
@@ -708,9 +1112,11 @@
 
                             <div class="company-card">
 
+
                                 <div class="company-avatar">
                                     C
                                 </div>
+
 
                                 <div>
 
@@ -729,36 +1135,56 @@
 
                             <div class="company-info-grid">
 
+
                                 <div>
-                                    <span>Razão social</span>
+
+                                    <span>
+                                        Razão social
+                                    </span>
 
                                     <strong>
                                         Empresa Exemplo LTDA
                                     </strong>
+
                                 </div>
 
+
                                 <div>
-                                    <span>CNPJ</span>
+
+                                    <span>
+                                        CNPJ
+                                    </span>
 
                                     <strong>
                                         00.000.000/0001-00
                                     </strong>
+
                                 </div>
 
+
                                 <div>
-                                    <span>Município</span>
+
+                                    <span>
+                                        Município
+                                    </span>
 
                                     <strong>
                                         Recife - PE
                                     </strong>
+
                                 </div>
 
+
                                 <div>
-                                    <span>Situação</span>
+
+                                    <span>
+                                        Situação
+                                    </span>
 
                                     <strong>
                                         Ativa
                                     </strong>
+
                                 </div>
 
                             </div>
@@ -770,9 +1196,12 @@
                 </article>
 
 
-                <!-- RTS -->
+                <!-- =========================================
+                     RTS
+                ========================================== -->
 
                 <article class="project reveal">
+
 
                     <div class="project-info">
 
@@ -788,9 +1217,10 @@
                             Jogo de estratégia em tempo real
                         </p>
 
+
                         <p class="project-description">
-                            Projeto desenvolvido em Godot com sistemas
-                            de seleção de unidades, coleta de recursos,
+                            Projeto desenvolvido em Godot com sistemas de
+                            seleção de unidades, coleta de recursos,
                             construção, movimentação, minimapa,
                             fog of war e gerenciamento de trabalhadores.
                         </p>
@@ -799,8 +1229,11 @@
                         <div class="project-technologies">
 
                             <span>Godot</span>
+
                             <span>GDScript</span>
+
                             <span>Game AI</span>
+
                             <span>Navigation</span>
 
                         </div>
@@ -813,8 +1246,12 @@
                                 class="text-link"
                             >
                                 Ver detalhes
-                                <span>↗</span>
+
+                                <span>
+                                    ↗
+                                </span>
                             </a>
+
 
                             <a
                                 href="https://github.com/"
@@ -823,7 +1260,10 @@
                                 class="text-link"
                             >
                                 GitHub
-                                <span>↗</span>
+
+                                <span>
+                                    ↗
+                                </span>
                             </a>
 
                         </div>
@@ -831,36 +1271,80 @@
                     </div>
 
 
-                    <div class="project-media project-media-light">
+                    <div
+                        class="
+                            project-media
+                            project-media-light
+                        "
+                    >
 
                         <div class="game-preview">
 
+
                             <div class="game-topbar">
 
-                                <span>🪵 100</span>
-                                <span>🪨 150</span>
-                                <span>🪙 100</span>
+                                <span>
+                                    🪵 100
+                                </span>
+
+                                <span>
+                                    🪨 150
+                                </span>
+
+                                <span>
+                                    🪙 100
+                                </span>
 
                             </div>
 
 
                             <div class="game-world">
 
-                                <div class="tree tree-one">♠</div>
-                                <div class="tree tree-two">♠</div>
-                                <div class="tree tree-three">♠</div>
+
+                                <div class="tree tree-one">
+                                    ♠
+                                </div>
+
+                                <div class="tree tree-two">
+                                    ♠
+                                </div>
+
+                                <div class="tree tree-three">
+                                    ♠
+                                </div>
+
 
                                 <div class="castle">
 
-                                    <span>▲</span>
+                                    <span>
+                                        ▲
+                                    </span>
 
                                     <div></div>
 
                                 </div>
 
-                                <div class="unit unit-one"></div>
-                                <div class="unit unit-two"></div>
-                                <div class="unit unit-three"></div>
+
+                                <div
+                                    class="
+                                        unit
+                                        unit-one
+                                    "
+                                ></div>
+
+                                <div
+                                    class="
+                                        unit
+                                        unit-two
+                                    "
+                                ></div>
+
+                                <div
+                                    class="
+                                        unit
+                                        unit-three
+                                    "
+                                ></div>
 
                             </div>
 
@@ -869,10 +1353,13 @@
 
                                 <div class="game-minimap"></div>
 
+
                                 <div class="game-actions">
 
                                     <span></span>
+
                                     <span></span>
+
                                     <span></span>
 
                                 </div>
@@ -890,7 +1377,9 @@
         </section>
 
 
-        <!-- TECNOLOGIAS -->
+        <!-- =========================================
+             TECNOLOGIAS
+        ========================================== -->
 
         <section
             class="section technologies"
@@ -898,6 +1387,7 @@
         >
 
             <div class="container">
+
 
                 <div class="section-heading reveal">
 
@@ -936,16 +1426,30 @@
 
                         <div class="technology-tags">
 
-                            <span>Flutter</span>
-                            <span>Dart</span>
-                            <span>Riverpod</span>
+                            <span>
+                                Flutter
+                            </span>
+
+                            <span>
+                                Dart
+                            </span>
+
+                            <span>
+                                Riverpod
+                            </span>
 
                         </div>
 
                     </article>
 
 
-                    <article class="technology-card technology-card-teal reveal">
+                    <article
+                        class="
+                            technology-card
+                            technology-card-teal
+                            reveal
+                        "
+                    >
 
                         <span class="technology-index">
                             02
@@ -957,9 +1461,17 @@
 
                         <div class="technology-tags">
 
-                            <span>HTML</span>
-                            <span>CSS</span>
-                            <span>JavaScript</span>
+                            <span>
+                                HTML
+                            </span>
+
+                            <span>
+                                CSS
+                            </span>
+
+                            <span>
+                                JavaScript
+                            </span>
 
                         </div>
 
@@ -978,16 +1490,30 @@
 
                         <div class="technology-tags">
 
-                            <span>SQLite</span>
-                            <span>Drift</span>
-                            <span>REST API</span>
+                            <span>
+                                SQLite
+                            </span>
+
+                            <span>
+                                Drift
+                            </span>
+
+                            <span>
+                                REST API
+                            </span>
 
                         </div>
 
                     </article>
 
 
-                    <article class="technology-card technology-card-orange reveal">
+                    <article
+                        class="
+                            technology-card
+                            technology-card-orange
+                            reveal
+                        "
+                    >
 
                         <span class="technology-index">
                             04
@@ -999,8 +1525,13 @@
 
                         <div class="technology-tags">
 
-                            <span>Godot</span>
-                            <span>GDScript</span>
+                            <span>
+                                Godot
+                            </span>
+
+                            <span>
+                                GDScript
+                            </span>
 
                         </div>
 
@@ -1019,9 +1550,17 @@
 
                         <div class="technology-tags">
 
-                            <span>Git</span>
-                            <span>GitHub</span>
-                            <span>VS Code</span>
+                            <span>
+                                Git
+                            </span>
+
+                            <span>
+                                GitHub
+                            </span>
+
+                            <span>
+                                VS Code
+                            </span>
 
                         </div>
 
@@ -1029,7 +1568,11 @@
 
 
                     <article
-                        class="technology-card technology-card-highlight reveal"
+                        class="
+                            technology-card
+                            technology-card-highlight
+                            reveal
+                        "
                     >
 
                         <p>
@@ -1047,7 +1590,9 @@
         </section>
 
 
-        <!-- CONTATO -->
+        <!-- =========================================
+             CONTATO
+        ========================================== -->
 
         <section
             class="section contact"
@@ -1055,6 +1600,7 @@
         >
 
             <div class="container">
+
 
                 <div class="contact-box reveal">
 
@@ -1075,12 +1621,19 @@
                             desenvolvimento, tecnologia e novos projetos.
                         </p>
 
+
                         <a
                             href="mailto:seuemail@email.com"
-                            class="button button-contact"
+                            class="
+                                button
+                                button-contact
+                            "
                         >
                             Entrar em contato
-                            <span>↗</span>
+
+                            <span>
+                                ↗
+                            </span>
                         </a>
 
                     </div>
@@ -1096,11 +1649,20 @@
                         >
 
                             <div>
-                                <small>GitHub</small>
-                                <strong>Meus projetos</strong>
+
+                                <small>
+                                    GitHub
+                                </small>
+
+                                <strong>
+                                    Meus projetos
+                                </strong>
+
                             </div>
 
-                            <span>↗</span>
+                            <span>
+                                ↗
+                            </span>
 
                         </a>
 
@@ -1112,23 +1674,43 @@
                         >
 
                             <div>
-                                <small>LinkedIn</small>
-                                <strong>Perfil profissional</strong>
+
+                                <small>
+                                    LinkedIn
+                                </small>
+
+                                <strong>
+                                    Perfil profissional
+                                </strong>
+
                             </div>
 
-                            <span>↗</span>
+                            <span>
+                                ↗
+                            </span>
 
                         </a>
 
 
-                        <a href="mailto:seuemail@email.com">
+                        <a
+                            href="mailto:seuemail@email.com"
+                        >
 
                             <div>
-                                <small>E-mail</small>
-                                <strong>seuemail@email.com</strong>
+
+                                <small>
+                                    E-mail
+                                </small>
+
+                                <strong>
+                                    seuemail@email.com
+                                </strong>
+
                             </div>
 
-                            <span>↗</span>
+                            <span>
+                                ↗
+                            </span>
 
                         </a>
 
@@ -1139,11 +1721,20 @@
                         >
 
                             <div>
-                                <small>Currículo</small>
-                                <strong>Visualizar PDF</strong>
+
+                                <small>
+                                    Currículo
+                                </small>
+
+                                <strong>
+                                    Visualizar PDF
+                                </strong>
+
                             </div>
 
-                            <span>↓</span>
+                            <span>
+                                ↓
+                            </span>
 
                         </a>
 
@@ -1158,20 +1749,28 @@
     </main>
 
 
-    <!-- FOOTER -->
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
 
     <footer class="footer">
 
         <div class="container footer-container">
 
-            <a href="#inicio" class="logo">
+
+            <a
+                href="#inicio"
+                class="logo"
+            >
                 Douglas<span>.</span>
             </a>
+
 
             <p>
                 Desenvolvido por Douglas Antonio •
                 <span id="currentYear"></span>
             </p>
+
 
             <a
                 href="#inicio"
