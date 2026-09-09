@@ -29,9 +29,12 @@ const codeWindow =
 const themeToggle =
     document.getElementById("themeToggle");
 
+const themeIcon =
+    document.getElementById("themeIcon");
+
 
 // ========================================
-// ANO AUTOMÁTICO
+// ANO
 // ========================================
 
 if (currentYear) {
@@ -58,9 +61,16 @@ function getCurrentTheme() {
 }
 
 
+// ========================================
+// ATUALIZA ÍCONE
+// ========================================
+
 function updateThemeButton() {
 
-    if (!themeToggle) {
+    if (
+        !themeToggle ||
+        !themeIcon
+    ) {
         return;
     }
 
@@ -68,6 +78,12 @@ function updateThemeButton() {
     const isDark =
         getCurrentTheme() ===
         "dark";
+
+
+    themeIcon.textContent =
+        isDark
+            ? "☀️"
+            : "🌙";
 
 
     themeToggle.setAttribute(
@@ -88,7 +104,14 @@ function updateThemeButton() {
 }
 
 
-function setTheme(theme) {
+// ========================================
+// APLICA TEMA
+// ========================================
+
+function applyTheme(
+    theme,
+    savePreference = true
+) {
 
     document.documentElement
         .dataset
@@ -96,10 +119,14 @@ function setTheme(theme) {
         theme;
 
 
-    localStorage.setItem(
-        "portfolio-theme",
-        theme
-    );
+    if (savePreference) {
+
+        localStorage.setItem(
+            "portfolio-theme",
+            theme
+        );
+
+    }
 
 
     updateThemeButton();
@@ -107,7 +134,14 @@ function setTheme(theme) {
 }
 
 
-if (themeToggle) {
+// ========================================
+// BOTÃO DE TEMA
+// ========================================
+
+if (
+    themeToggle &&
+    themeIcon
+) {
 
     themeToggle.addEventListener(
         "click",
@@ -123,7 +157,10 @@ if (themeToggle) {
                     : "dark";
 
 
-            setTheme(newTheme);
+            applyTheme(
+                newTheme,
+                true
+            );
 
         }
     );
@@ -135,7 +172,7 @@ updateThemeButton();
 
 
 // ========================================
-// ALTERAÇÃO DO TEMA DO SISTEMA
+// TEMA DO SISTEMA
 // ========================================
 
 const systemTheme =
@@ -149,9 +186,9 @@ systemTheme.addEventListener(
     event => {
 
         /*
-            Só acompanhamos o sistema
-            se o usuário ainda não tiver
-            escolhido manualmente um tema.
+            Se o usuário já escolheu
+            manualmente um tema,
+            não alteramos automaticamente.
         */
 
         const savedTheme =
@@ -165,10 +202,11 @@ systemTheme.addEventListener(
         }
 
 
-        setTheme(
+        applyTheme(
             event.matches
                 ? "dark"
-                : "light"
+                : "light",
+            false
         );
 
     }
@@ -176,7 +214,7 @@ systemTheme.addEventListener(
 
 
 // ========================================
-// HEADER AO ROLAR
+// HEADER SCROLL
 // ========================================
 
 function updateHeader() {
@@ -186,7 +224,10 @@ function updateHeader() {
     }
 
 
-    if (window.scrollY > 30) {
+    if (
+        window.scrollY >
+        30
+    ) {
 
         header.classList.add(
             "scrolled"
@@ -216,12 +257,15 @@ updateHeader();
 
 
 // ========================================
-// FUNÇÃO FECHAR MENU
+// FECHAR MENU
 // ========================================
 
 function closeMenu() {
 
-    if (!nav || !menuButton) {
+    if (
+        !nav ||
+        !menuButton
+    ) {
         return;
     }
 
@@ -292,7 +336,7 @@ if (
 
 
 // ========================================
-// FECHAR MENU AO CLICAR EM LINK
+// LINKS DO MENU
 // ========================================
 
 navLinks.forEach(
@@ -312,13 +356,14 @@ navLinks.forEach(
 
 
 // ========================================
-// LINK ATIVO CONFORME O SCROLL
+// LINK ATIVO
 // ========================================
 
 function updateActiveSection() {
 
     const scrollPosition =
-        window.scrollY + 170;
+        window.scrollY +
+        170;
 
 
     sections.forEach(
@@ -327,8 +372,10 @@ function updateActiveSection() {
             const sectionTop =
                 section.offsetTop;
 
+
             const sectionHeight =
                 section.offsetHeight;
+
 
             const sectionId =
                 section.getAttribute(
@@ -442,7 +489,7 @@ revealElements.forEach(
 
 
 // ========================================
-// FECHAR MENU AO CLICAR FORA
+// CLICOU FORA DO MENU
 // ========================================
 
 document.addEventListener(
@@ -513,8 +560,14 @@ document.addEventListener(
 
 
 // ========================================
-// PARALLAX DA JANELA
+// PARALLAX
 // ========================================
+
+const reducedMotionQuery =
+    window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    );
+
 
 function handleCodeParallax(
     event
@@ -525,35 +578,15 @@ function handleCodeParallax(
     }
 
 
-    /*
-        Sem parallax em telas menores.
-    */
-
     if (
         window.innerWidth <
-        1000
+        1000 ||
+        reducedMotionQuery.matches
     ) {
 
-        codeWindow.style
-            .transform =
+        codeWindow.style.transform =
             "translate3d(0, 0, 0)";
 
-        return;
-    }
-
-
-    /*
-        Também respeita pessoas
-        que preferem menos movimento.
-    */
-
-    const prefersReducedMotion =
-        window.matchMedia(
-            "(prefers-reduced-motion: reduce)"
-        ).matches;
-
-
-    if (prefersReducedMotion) {
         return;
     }
 
@@ -579,13 +612,7 @@ function handleCodeParallax(
 
 
     codeWindow.style.transform =
-        `
-        translate3d(
-            ${moveX}px,
-            ${moveY}px,
-            0
-        )
-        `;
+        `translate3d(${moveX}px, ${moveY}px, 0)`;
 
 }
 
@@ -597,7 +624,7 @@ window.addEventListener(
 
 
 // ========================================
-// RESET DO PARALLAX
+// RESET PARALLAX
 // ========================================
 
 document.documentElement
@@ -610,8 +637,7 @@ document.documentElement
             }
 
 
-            codeWindow.style
-                .transform =
+            codeWindow.style.transform =
                 "translate3d(0, 0, 0)";
 
         }
@@ -626,29 +652,17 @@ window.addEventListener(
     "resize",
     () => {
 
-        /*
-            Desativa o movimento do
-            card em tablet/mobile.
-        */
-
         if (
             window.innerWidth <
             1000 &&
             codeWindow
         ) {
 
-            codeWindow.style
-                .transform =
+            codeWindow.style.transform =
                 "translate3d(0, 0, 0)";
 
         }
 
-
-        /*
-            Se voltar para desktop
-            com o menu aberto,
-            fecha automaticamente.
-        */
 
         if (
             window.innerWidth >
